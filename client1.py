@@ -1,0 +1,18 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+import socket# 客户端 发送一个数据，再接收一个数据
+from numpy import *
+client = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #声明socket类型，同时生成链接对象
+client.connect(('localhost',7000)) #建立一个链接，连接到本地的6969端口
+
+while True:
+#addr = client.accept()
+    # print '连接地址：', addr
+    msg = input("请输入：") #strip默认取出字符串的头尾空格
+    if(msg =='exit'):
+        break
+    client.send(msg.encode('utf-8'))  #发送一条信息 python3 只接收btye流
+    data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
+    print('recv:',data.decode()) #输出我接收的信息
+client.close() #关闭这个链接
